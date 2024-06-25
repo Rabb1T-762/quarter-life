@@ -36,6 +36,7 @@ public class InputManager : MonoBehaviour
             onFoot.Crouch.ReadValue<float>()
             );
         playerLook.ProcessLook(onFoot.Look.ReadValue<Vector2>());
+        
     }
 
     private void OnEnable()

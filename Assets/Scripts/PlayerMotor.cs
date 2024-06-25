@@ -14,8 +14,6 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private float playerWalkSpeed = 5f;
     [SerializeField] private float playerCrouchSpeed = 4f;
     [SerializeField] private float playerAcceleration = 5f;
-    [SerializeField] private float gravity = -9.8f;
-    [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private float transformCrouchHeight = 1f;
     [SerializeField] private float transformStandingHeight = 2f;
     [SerializeField] private float crouchTransitionSpeed = 10f;
@@ -23,7 +21,9 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundDistance = 0.4f;
     [SerializeField] private LayerMask groundMask;
-    private float jumpForceMultiplier = -2.0f;
+    [SerializeField] private float gravity = -9.8f;
+    [SerializeField] private float jumpHeight = 2f;
+    [SerializeField] private float jumpForceMultiplier = -2.0f;
 
     private Vector3 playerVelocity;
     private bool isGrounded;
