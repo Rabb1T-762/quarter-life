@@ -309,7 +309,7 @@ MonoBehaviour:
   playerWalkSpeed: 5
   playerCrouchSpeed: 4
   gravity: -9.8
-  jumpHeight: 3
+  jumpHeight: 0.48
   transformCrouchHeight: 1
   transformStandingHeight: 2
   crouchTransitionSpeed: 10
