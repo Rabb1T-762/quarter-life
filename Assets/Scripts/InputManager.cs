@@ -11,6 +11,7 @@ public class InputManager : MonoBehaviour
     private PlayerInput.OnFootActions onFoot;
     private PlayerMotor playerMotor;
     private PlayerLook playerLook;
+    private Weapon weapon;
 
     void Awake()
     {
@@ -19,6 +20,7 @@ public class InputManager : MonoBehaviour
 
         playerMotor = GetComponent<PlayerMotor>();
         playerLook = GetComponent<PlayerLook>();
+        weapon = GetComponentInChildren<Weapon>();
 
         onFoot.Jump.performed += ctx => playerMotor.Jump();
 
@@ -36,7 +38,11 @@ public class InputManager : MonoBehaviour
             onFoot.Crouch.ReadValue<float>()
             );
         playerLook.ProcessLook(onFoot.Look.ReadValue<Vector2>());
-        
+
+        if (onFoot.Shoot.ReadValue<float>() > 0)
+        {
+            weapon.FireWeapon();
+        }
     }
 
     private void OnEnable()

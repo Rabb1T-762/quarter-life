@@ -4,22 +4,33 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public GameObject bulletPrefab;
-    public Transform bulletSpawn;
-    public float bulletSpeed = 30f;
-    public float bulletPrefabLifetime = 2f;
+    [SerializeField] private GameObject playerObject;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform bulletSpawn;
+    [SerializeField] private float bulletVelocity = 30f;
+    [SerializeField] private float bulletPrefabLifetime = 3f;
 
     // Update is called once per frame
     void Update()
     {
         
     }
-    
+
     public void FireWeapon()
     {
-        GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+        Debug.Log("Bang!");
+        // Instantiate the bullet
+        GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
+        // Shoot the bullet
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        rb.velocity = bulletSpawn.forward * bulletSpeed;
-        Destroy(bullet, bulletPrefabLifetime);
+        rb.AddForce(bulletSpawn.forward.normalized * bulletVelocity, ForceMode.Impulse);
+        // Destroy the bullet after a certain amount of time
+        StartCoroutine(DestroyBulletAfterTime(bullet, bulletPrefabLifetime));
+    }
+
+    private IEnumerator DestroyBulletAfterTime(GameObject bullet, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(bullet);
     }
 }
