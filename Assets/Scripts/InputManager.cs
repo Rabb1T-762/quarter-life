@@ -9,20 +9,16 @@ public class InputManager : MonoBehaviour
 {
     private PlayerInput playerInput;
     private PlayerInput.OnFootActions onFoot;
-    private PlayerMotor playerMotor;
-    private PlayerLook playerLook;
-    private Weapon weapon;
+    private PlayerCharacterController playerCharacterController;
+    private PlayerCameraController playerCamera;
 
     void Awake()
     {
         playerInput = new PlayerInput();
         onFoot = playerInput.OnFoot;
 
-        playerMotor = GetComponent<PlayerMotor>();
-        playerLook = GetComponent<PlayerLook>();
-        weapon = GetComponentInChildren<Weapon>();
-
-        onFoot.Jump.performed += ctx => playerMotor.Jump();
+        playerCharacterController = GetComponent<PlayerCharacterController>();
+        playerCamera = GetComponent<PlayerCameraController>();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -30,19 +26,38 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
-        // make playermoter move using value from our movement action
-        playerMotor.ProcessMove(
-            onFoot.Movement.ReadValue<Vector2>(),
-            onFoot.Jump.ReadValue<float>(),
-            onFoot.Walk.ReadValue<float>(),
-            onFoot.Crouch.ReadValue<float>()
-            );
-        playerLook.ProcessLook(onFoot.Look.ReadValue<Vector2>());
+        
+    }
 
-        if (onFoot.Shoot.ReadValue<float>() > 0)
-        {
-            weapon.FireWeapon();
-        }
+    public Vector3 GetMoveInput()
+    {
+        Vector3 move = new Vector3(onFoot.Movement.ReadValue<Vector2>().x , 0f, onFoot.Movement.ReadValue<Vector2>().y);
+        return move;
+    }
+    
+    public bool GetJumpInput()
+    {
+        return onFoot.Jump.WasPressedThisFrame();
+    }
+
+    public bool GetWalkInputHeld()
+    {
+        return onFoot.Walk.IsPressed();
+    }
+    
+    public bool GetCrouchInputHeld()
+    {
+        return onFoot.Crouch.IsPressed();
+    }
+
+    public Vector2 GetLookInput()
+    {
+        return onFoot.Look.ReadValue<Vector2>();
+    }
+    
+    public bool GetTriggerInputPressed()
+    {
+        return onFoot.Shoot.WasPressedThisFrame();
     }
 
     private void OnEnable()

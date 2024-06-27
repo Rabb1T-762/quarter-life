@@ -4,17 +4,10 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    [SerializeField] private GameObject playerObject;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform bulletSpawn;
     [SerializeField] private float bulletVelocity = 30f;
     [SerializeField] private float bulletPrefabLifetime = 3f;
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void FireWeapon()
     {
