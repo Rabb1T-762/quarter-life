@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -11,7 +10,7 @@ public class Weapon : MonoBehaviour
 
     public void FireWeapon()
     {
-        Debug.Log("Bang!");
+        // Debug.Log("Bang!");
         // Instantiate the bullet
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
         // Shoot the bullet
