@@ -104,12 +104,10 @@ public class PlayerCharacterController : MonoBehaviour
         targetVelocity = ((isGrounded) ? playerMaxGroundedSpeed : playerMaxAirbournSpeed) * movementMultiplier;
 
         // calculate the player's current velocity
-        Debug.Log("Target Velocity: " + targetVelocity);
         if (playerCurrentVelocity != targetVelocity)
         {
             playerCurrentVelocity =
                 Mathf.SmoothStep(playerCurrentVelocity, targetVelocity, playerAcceleration * Time.deltaTime);
-            Debug.Log("Current Velocity: " + playerCurrentVelocity);
         }
 
         var transformMoveDirection = transform.TransformDirection(moveDirection);
