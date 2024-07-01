@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class SwayMovement : MonoBehaviour 
 {
-    [SerializeField] private Transform transform;
+    [SerializeField] private new Transform transform;
     // The sway's deviation from the original position in the y-axis.
     [SerializeField] private float swayYAmplitude = 2f;
     // A factor to control the time it takes for the sway animation to complete.
