@@ -1,12 +1,6 @@
 using UnityEngine;
 
-// Attempt to introduce a breathing animation.
-// The camera should gently bop up and down when stationary.
-// This class could be turned into a generic non-player camera movement module
-// (for camera twitches caused by taking damage, for example).
-// But for now it will simply be used to play around with a sway.
-
-public class SwayMovement : MonoBehaviour 
+public class TransformSwayMovement : MonoBehaviour 
 {
     [SerializeField] private new Transform transform;
     // The sway's deviation from the original position in the y-axis.
