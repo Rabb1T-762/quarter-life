@@ -2911,6 +2911,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 796990a2e5bba6c47967b6eee2fd6017, type: 3}
+--- !u!1 &298810335 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2922524039592919404, guid: 6594b2cf3bc8dde45967dd4ade0844de,
+    type: 3}
+  m_PrefabInstance: {fileID: 3847745101306968069}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &302216681
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9222,6 +9228,22 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1007099079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007099070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce10001511856d047bfbd2b4660ec4e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transform: {fileID: 43277244}
+  forceMagnitude: 10
+  rb: {fileID: 43277240}
+  forceDirection: {x: 0, y: 1, z: 0}
 --- !u!4 &1008121402 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3106178858724196588, guid: 7af8d7d2acc53f04f87eb5c7bf182e4f,
@@ -11447,6 +11469,25 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3847745101306968069}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1238760092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298810335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fbe4b99830cd38458ff1ad80449dab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transform: {fileID: 1238760088}
+  swayYAmplitude: 2
+  swayYFrequency: 3
+  swayScale: 100
+  swayLerpSpeed: 10
+  swayXAmplitude: 1
+  swayXFrequency: 1
 --- !u!4 &1240660753 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8394146240896054493, guid: cd0ce379e05cdd546b4c9956c6d95e50,
@@ -14772,6 +14813,39 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28a55259948f5af4daf3e090015aaf6a, type: 3}
+--- !u!1 &1653624725 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3780940336853504683, guid: 6594b2cf3bc8dde45967dd4ade0844de,
+    type: 3}
+  m_PrefabInstance: {fileID: 3847745101306968069}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1653624730
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653624725}
+  serializedVersion: 4
+  m_Mass: 50
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!4 &1653694786 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4080551062797702046, guid: 9b850e4e6eeacc14288fe0c8163cb682,
@@ -18669,6 +18743,18 @@ PrefabInstance:
         type: 3}
       insertIndex: 1
       addedObject: {fileID: 1007099075}
+    - targetCorrespondingSourceObject: {fileID: 5975939887632696646, guid: 6594b2cf3bc8dde45967dd4ade0844de,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1007099079}
+    - targetCorrespondingSourceObject: {fileID: 3780940336853504683, guid: 6594b2cf3bc8dde45967dd4ade0844de,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1653624730}
+    - targetCorrespondingSourceObject: {fileID: 2922524039592919404, guid: 6594b2cf3bc8dde45967dd4ade0844de,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1238760092}
   m_SourcePrefab: {fileID: 100100000, guid: 6594b2cf3bc8dde45967dd4ade0844de, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
