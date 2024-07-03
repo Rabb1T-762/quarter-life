@@ -50,7 +50,8 @@ public class PlayerCharacterController : MonoBehaviour
         bool jumpInput = inputManager.GetJumpInput();
         bool walkInput = inputManager.GetWalkInputHeld();
         bool crouchInput = inputManager.GetCrouchInputHeld();
-        ProcessMove(moveDirection, jumpInput, walkInput, crouchInput);
+        // Jump is currently disabled in favour of testing the forces
+        ProcessMove(moveDirection, false, walkInput, crouchInput);
 
         Vector2 lookDirection = inputManager.GetLookInput();
         cameraController.ProcessLook(lookDirection);
