@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace ScifiOffice {
+namespace ScifiOfficeLite.Scripts {
     public class DemoDoor : MonoBehaviour {
         Animator anim;
 

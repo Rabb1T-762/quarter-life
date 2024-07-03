@@ -1,21 +1,21 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+namespace _Project.Scripts
 {
-    private void OnCollisionEnter(Collision collision)
+    public class Bullet : MonoBehaviour
     {
-        if (collision.gameObject.tag == "Target")
+        private void OnCollisionEnter(Collision collision)
         {
-            print("Hit " + collision.gameObject.name + "!");
-            Destroy(gameObject);
-        }
+            if (collision.gameObject.CompareTag("Target"))
+            {
+                print("Hit " + collision.gameObject.name + "!");
+                Destroy(gameObject);
+            }
         
-        if (collision.gameObject)
-        {
-            Destroy(gameObject);
+            if (collision.gameObject)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
