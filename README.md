@@ -8,7 +8,7 @@ The initial project scope is to create a small 3D first person shooter in Unity 
 similar movement mechanics and systems to Half-Life.
 
 For more information and updates on the project see the 
-[Project Documentation](https://github.com/Rabb1T-762/quarter-life/Docs/Project.md)
+[Project Documentation](https://github.com/Rabb1T-762/quarter-life/blob/main/Assets/_Project/Docs/Project.md)
 
 ## Installation
 1. Clone the repo: `git clone https://github.com/Rabb1T-762/quarter-life.git`
@@ -20,7 +20,7 @@ For more information and updates on the project see the
 Build the project in unity and run the executable.
 
 ## Contributing
-Please read the [Developer Guide](https://github.com/Rabb1T-762/quarter-life/Docs/DeveloperGuide.md) 
+Please read the [Developer Guide](https://github.com/Rabb1T-762/quarter-life/blob/main/Assets/_Project/Docs/DeveloperGuide.md) 
 for guidelines on contributing.
 
 ## License
