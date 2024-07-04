@@ -4,13 +4,13 @@ namespace _Project.Scripts
 {
     public class InputManager : MonoBehaviour
     {
-        private PlayerInput playerInput;
-        private PlayerInput.OnFootActions onFoot;
+        private PlayerInput _playerInput;
+        private PlayerInput.OnFootActions _onFoot;
 
         void Awake()
         {
-            playerInput = new PlayerInput();
-            onFoot = playerInput.OnFoot;
+            _playerInput = new PlayerInput();
+            _onFoot = _playerInput.OnFoot;
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -18,43 +18,43 @@ namespace _Project.Scripts
 
         public Vector3 GetMoveInput()
         {
-            Vector3 move = new Vector3(onFoot.Movement.ReadValue<Vector2>().x , 0f, onFoot.Movement.ReadValue<Vector2>().y);
+            Vector3 move = new Vector3(_onFoot.Movement.ReadValue<Vector2>().x , 0f, _onFoot.Movement.ReadValue<Vector2>().y);
             return move;
         }
     
         public bool GetJumpInput()
         {
-            return onFoot.Jump.WasPressedThisFrame();
+            return _onFoot.Jump.WasPressedThisFrame();
         }
 
         public bool GetWalkInputHeld()
         {
-            return onFoot.Walk.IsPressed();
+            return _onFoot.Walk.IsPressed();
         }
     
         public bool GetCrouchInputHeld()
         {
-            return onFoot.Crouch.IsPressed();
+            return _onFoot.Crouch.IsPressed();
         }
 
         public Vector2 GetLookInput()
         {
-            return onFoot.Look.ReadValue<Vector2>();
+            return _onFoot.Look.ReadValue<Vector2>();
         }
     
         public bool GetTriggerInputPressed()
         {
-            return onFoot.Shoot.WasPressedThisFrame();
+            return _onFoot.Shoot.WasPressedThisFrame();
         }
 
         private void OnEnable()
         {
-            onFoot.Enable();
+            _onFoot.Enable();
         }
 
         private void OnDisable()
         {
-            onFoot.Disable();
+            _onFoot.Disable();
         }
     }
 }

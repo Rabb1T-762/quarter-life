@@ -8,17 +8,17 @@ namespace _Project.Scripts
         [SerializeField] private float forceMagnitude = 10f;
         [SerializeField] private Rigidbody rb;
         [SerializeField] private Vector3 forceDirection;
-        private InputManager inputManager;
+        private InputManager _inputManager;
 
         void Start()
         {
-            inputManager = GetComponent<InputManager>();
+            _inputManager = GetComponent<InputManager>();
             rb = transform.GetComponent<Rigidbody>();
         }
 
         void Update() 
         {
-            bool jumpInput = inputManager.GetJumpInput();
+            bool jumpInput = _inputManager.GetJumpInput();
             if(jumpInput)
             {
                 // Debug.Log("About to apply a force!");

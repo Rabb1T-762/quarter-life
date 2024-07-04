@@ -7,9 +7,9 @@ namespace _Project.Scripts
 {
     public class PlayerCharacterController : MonoBehaviour
     {
-        private CharacterController controller;
-        private InputManager inputManager;
-        private PlayerCameraController cameraController;
+        private CharacterController _controller;
+        private InputManager _inputManager;
+        private PlayerCameraController _cameraController;
 
         [SerializeField] private float playerMaxGroundedSpeed = 10f;
         [SerializeField] private float playerMaxAirborneSpeed = 15f;
@@ -29,62 +29,55 @@ namespace _Project.Scripts
 
         [SerializeField] private Weapon mainWeapon;
 
-        private Vector3 playerVelocity;
-        private float playerCurrentVelocity;
-        private float targetVelocity;
-        private float targetTransformHeight;
-        private float movementMultiplier = 1f;
-        private bool isGrounded;
+        private Vector3 _playerVelocity;
+        private float _playerCurrentVelocity;
+        private float _targetVelocity;
+        private float _targetTransformHeight;
+        private float _movementMultiplier = 1f;
+        private bool _isGrounded;
 
-        private Vector3 lastPosition = Vector3.zero;
-        private bool isMoving;
+        private Vector3 _lastPosition = Vector3.zero;
+        private bool _isMoving;
 
         // Start is called before the first frame update
         void Start()
         {
-            controller = GetComponent<CharacterController>();
-            cameraController = GetComponent<PlayerCameraController>();
-            inputManager = GetComponent<InputManager>();
+            _controller = GetComponent<CharacterController>();
+            _cameraController = GetComponent<PlayerCameraController>();
+            _inputManager = GetComponent<InputManager>();
         }
 
         private void Update()
         {
-            Vector3 moveDirection = inputManager.GetMoveInput();
-            bool jumpInput = inputManager.GetJumpInput();
-            bool walkInput = inputManager.GetWalkInputHeld();
-            bool crouchInput = inputManager.GetCrouchInputHeld();
+            Vector3 moveDirection = _inputManager.GetMoveInput();
+            bool jumpInput = _inputManager.GetJumpInput();
+            bool walkInput = _inputManager.GetWalkInputHeld();
+            bool crouchInput = _inputManager.GetCrouchInputHeld();
             ProcessMove(moveDirection, jumpInput, walkInput, crouchInput);
 
-            Vector2 lookDirection = inputManager.GetLookInput();
-            cameraController.ProcessLook(lookDirection);
+            Vector2 lookDirection = _inputManager.GetLookInput();
+            _cameraController.ProcessLook(lookDirection);
 
-            if (inputManager.GetTriggerInputPressed())
+            if (_inputManager.GetTriggerInputPressed())
             {
                 mainWeapon.FireWeapon();
             }
         }
 
         // receive the inputs from our InputManager.cs and apply them to our character controller
-        public void ProcessMove(Vector3 moveDirection, bool jumpInput, bool walkInput, bool crouchInput)
+        private void ProcessMove(Vector3 moveDirection, bool jumpInput, bool walkInput, bool crouchInput)
         {
-            if (lastPosition != gameObject.transform.position)
-            {
-                isMoving = true;
-            }
-            else
-            {
-                isMoving = false;
-            }
+            _isMoving = _lastPosition != gameObject.transform.position;
         
             // Grounded check
-            isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+            _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
             // Resetting the player velocity
-            movementMultiplier = 1f;
-            if (isGrounded && playerVelocity.y < 0)
+            _movementMultiplier = 1f;
+            if (_isGrounded && _playerVelocity.y < 0)
             {
                 // applying constant gravity to the player
-                playerVelocity.y = -2f;
+                _playerVelocity.y = -2f;
             }
 
             // Handle Walking
@@ -99,70 +92,70 @@ namespace _Project.Scripts
             }
             else
             {
-                targetTransformHeight = transformStandingHeight;
+                _targetTransformHeight = transformStandingHeight;
             }
 
             // Update the character height
             HandleCharacterHeight();
 
             // calculate target velocity
-            targetVelocity = ((isGrounded) ? playerMaxGroundedSpeed : playerMaxAirborneSpeed) * movementMultiplier;
+            _targetVelocity = ((_isGrounded) ? playerMaxGroundedSpeed : playerMaxAirborneSpeed) * _movementMultiplier;
 
             // calculate the player's current velocity
-            if (Math.Abs(playerCurrentVelocity - targetVelocity) > 0.001f)
+            if (Math.Abs(_playerCurrentVelocity - _targetVelocity) > 0.001f)
             {
-                playerCurrentVelocity =
-                    Mathf.SmoothStep(playerCurrentVelocity, targetVelocity, playerAcceleration * Time.deltaTime);
+                _playerCurrentVelocity =
+                    Mathf.SmoothStep(_playerCurrentVelocity, _targetVelocity, playerAcceleration * Time.deltaTime);
             }
 
             var transformMoveDirection = transform.TransformDirection(moveDirection);
 
-            controller.Move(transformMoveDirection * (playerCurrentVelocity * Time.deltaTime));
+            _controller.Move(transformMoveDirection * (_playerCurrentVelocity * Time.deltaTime));
 
             // Handle Jumping
-            if (isGrounded && jumpInput)
+            if (_isGrounded && jumpInput)
             {
                 Jump();
             }
 
             // Handle Falling
-            playerVelocity.y += gravity * Time.deltaTime;
+            _playerVelocity.y += gravity * Time.deltaTime;
 
             // Executing the jump
-            controller.Move(playerVelocity * Time.deltaTime);
+            _controller.Move(_playerVelocity * Time.deltaTime);
 
 
-            lastPosition = gameObject.transform.position;
+            _lastPosition = gameObject.transform.position;
         }
 
         private void Jump()
         {
             // this is based on solving for initial velocity in the kinematic equation
             // u = sqrt(-2 * gravity * jumpHeight)
-            playerVelocity.y = Mathf.Sqrt(jumpHeight * jumpForceMultiplier * gravity);
+            _playerVelocity.y = Mathf.Sqrt(jumpHeight * jumpForceMultiplier * gravity);
         }
 
         private void Walk()
         {
-            movementMultiplier *= playerWalkSpeedMultiplier;
+            _movementMultiplier *= playerWalkSpeedMultiplier;
         }
 
         private void Crouch()
         {
-            movementMultiplier *= playerCrouchSpeedMultiplier;
-            targetTransformHeight = transformCrouchHeight;
+            _movementMultiplier *= playerCrouchSpeedMultiplier;
+            _targetTransformHeight = transformCrouchHeight;
         }
 
         private void HandleCharacterHeight()
         {
-            if (Math.Abs(controller.height - targetTransformHeight) > 0.001f)
+            if (Math.Abs(_controller.height - _targetTransformHeight) > 0.001f)
             {
-                controller.height = Mathf.Lerp(controller.height, targetTransformHeight,
+                _controller.height = Mathf.Lerp(_controller.height, _targetTransformHeight,
                     Time.deltaTime * heightTransitionSpeed);
             }
 
             // calculate the center of the character controller
-            Vector3 playerObjectBottom = controller.center - new Vector3(0, controller.height / 2, 0);
+            Vector3 playerObjectBottom = _controller.center - new Vector3(0, _controller.height / 2, 0);
 
             // set the ground check object to the bottom of the character controller
             groundCheck.transform.localPosition = playerObjectBottom;
