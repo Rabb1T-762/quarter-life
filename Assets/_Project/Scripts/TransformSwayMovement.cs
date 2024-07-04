@@ -18,15 +18,15 @@ namespace _Project.Scripts
         [SerializeField] private float swayXAmplitude = 1f;
         [SerializeField] private float swayXFrequency = 1f;
         // The oscillations are time-dependent, so t = 0 is initial.
-        private float swayTime = 0f;
+        private float _swayTime = 0f;
         // Vector representing the sway movement.
-        private Vector3 swayPosition;
+        private Vector3 _swayPosition;
         // Vector representing the origin of the given transform.
-        private Vector3 startPosition;
+        private Vector3 _startPosition;
 
         void Awake()
         {
-            startPosition = transform.localPosition;
+            _startPosition = transform.localPosition;
         }
 
         void Update() 
@@ -36,13 +36,13 @@ namespace _Project.Scripts
 
         private void CalculateSway()
         {
-            Vector3 targetPosition = SwayCurve(swayTime, swayXAmplitude, swayXFrequency, swayYAmplitude, swayYFrequency) / swayScale;
+            Vector3 targetPosition = SwayCurve(_swayTime, swayXAmplitude, swayXFrequency, swayYAmplitude, swayYFrequency) / swayScale;
 
-            swayPosition = Vector3.Lerp(swayPosition, targetPosition, Time.smoothDeltaTime * swayLerpSpeed);
+            _swayPosition = Vector3.Lerp(_swayPosition, targetPosition, Time.smoothDeltaTime * swayLerpSpeed);
 
-            swayTime += Time.deltaTime;
+            _swayTime += Time.deltaTime;
 
-            transform.localPosition = startPosition + swayPosition;
+            transform.localPosition = _startPosition + _swayPosition;
         }
         // This function returns an instantaneous vector representing the following equations:
         // f(t) = A * sin(a*t + d) and g(t) = B * sin(b*t)
