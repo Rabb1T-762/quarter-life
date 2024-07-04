@@ -7,7 +7,7 @@ namespace _Project.Scripts
         private PlayerInput _playerInput;
         private PlayerInput.OnFootActions _onFoot;
 
-        void Awake()
+        private void Awake()
         {
             _playerInput = new PlayerInput();
             _onFoot = _playerInput.OnFoot;
