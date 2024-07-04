@@ -1,32 +1,35 @@
 using UnityEngine;
 
-public class ForcePlay : MonoBehaviour
+namespace _Project.Scripts
 {
-    [SerializeField] private new Transform transform;
-    [SerializeField] private float forceMagnitude = 10f;
-    [SerializeField] private Rigidbody rb;
-    [SerializeField] private Vector3 forceDirection;
-    private InputManager inputManager;
-
-    void Start()
+    public class ForcePlay : MonoBehaviour
     {
-        inputManager = GetComponent<InputManager>();
-        rb = transform.GetComponent<Rigidbody>();
-    }
+        [SerializeField] private new Transform transform;
+        [SerializeField] private float forceMagnitude = 10f;
+        [SerializeField] private Rigidbody rb;
+        [SerializeField] private Vector3 forceDirection;
+        private InputManager inputManager;
 
-    void Update() 
-    {
-        bool jumpInput = inputManager.GetJumpInput();
-        if(jumpInput)
+        void Start()
         {
-            // Debug.Log("About to apply a force!");
-            ApplyForce();
+            inputManager = GetComponent<InputManager>();
+            rb = transform.GetComponent<Rigidbody>();
         }
-    }
 
-    private void ApplyForce()
-    {
-        rb.AddForce(forceDirection * forceMagnitude, ForceMode.Impulse);
-    }
+        void Update() 
+        {
+            bool jumpInput = inputManager.GetJumpInput();
+            if(jumpInput)
+            {
+                // Debug.Log("About to apply a force!");
+                ApplyForce();
+            }
+        }
 
+        private void ApplyForce()
+        {
+            rb.AddForce(forceDirection * forceMagnitude, ForceMode.Impulse);
+        }
+
+    }
 }

@@ -1,5 +1,4 @@
 ﻿# Quarter-life Project 
-
 This is a learning project for developers to learn the basics of game development.
 
 The initial project is to create a 3D first person shooter in Unity with 
@@ -11,7 +10,6 @@ recently celebrating its 25th anniversary.
 ## Scope
 
 ### Timeline
-
 The project will be built in thin vertical slices.
 The idea is to create limited end-to-end functionality for each slice.
 
@@ -19,7 +17,6 @@ Ambitious Project Goal:
 - Complete a basic implementation of the full functionality of the game before end of of 2024
 
 ### Mechanics
-
 Our mechanics are based on the the Source engine. 
 The movement in central to the game and will be a major focus of the project.
 
