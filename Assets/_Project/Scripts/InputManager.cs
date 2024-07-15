@@ -18,7 +18,7 @@ namespace _Project.Scripts
 
         public Vector3 GetMoveInput()
         {
-            Vector3 move = new Vector3(_onFoot.Movement.ReadValue<Vector2>().x , 0f, _onFoot.Movement.ReadValue<Vector2>().y);
+            Vector3 move = new Vector3(_onFoot.Movement.ReadValue<Vector2>().x, 0f, _onFoot.Movement.ReadValue<Vector2>().y);
             return move;
         }
     

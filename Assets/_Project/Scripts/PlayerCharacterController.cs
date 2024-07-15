@@ -71,6 +71,7 @@ namespace _Project.Scripts
         
             // Grounded check
             _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+            Debug.Log("groundMask: " + groundMask + " type: " + groundMask.GetType());
 
             // Resetting the player velocity
             _movementMultiplier = 1f;
