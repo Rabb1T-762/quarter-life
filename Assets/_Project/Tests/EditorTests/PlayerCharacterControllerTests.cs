@@ -46,7 +46,7 @@ namespace _Project.Tests.EditorTests
             SetPrivateSerializedField(_playerController, "transformStandingHeight", 2f);
             SetPrivateSerializedField(_playerController, "heightTransitionSpeed", 10f);
             SetPrivateSerializedField(_playerController, "groundDistance", 0.2f);
-            SetPrivateSerializedField(_playerController, "groundMask", LayerMask.GetMask("Default"));
+            SetPrivateSerializedField(_playerController, "groundMask", new LayerMask());
             SetPrivateSerializedField(_playerController, "gravity", -9.8f);
             SetPrivateSerializedField(_playerController, "jumpHeight", 2f);
             SetPrivateSerializedField(_playerController, "jumpForceMultiplier", -2.0f);
@@ -117,8 +117,12 @@ namespace _Project.Tests.EditorTests
             SetPrivateField("_targetTransformHeight", _playerController, 1f);
 
             // Act
+            InvokePrivateMethod(_playerController, "HandleCharacterHeight", null);
             yield return null; // Wait for a frame to allow height change
 
+            // Wait 100ms for height transition
+            yield return null;
+            
             // Assert
             Assert.AreEqual(1f, _characterController.height, 0.1f);
         }
