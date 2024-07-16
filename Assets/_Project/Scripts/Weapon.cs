@@ -12,7 +12,6 @@ namespace _Project.Scripts
 
         public void FireWeapon()
         {
-            // Debug.Log("Bang!");
             // Instantiate the bullet
             GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
             // Shoot the bullet

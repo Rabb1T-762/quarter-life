@@ -9,13 +9,18 @@ namespace _Project.Scripts
             if (collision.gameObject.CompareTag("Target"))
             {
                 print("Hit " + collision.gameObject.name + "!");
-                Destroy(gameObject);
+                DestroyBullet();
             }
         
             if (collision.gameObject)
             {
-                Destroy(gameObject);
+                DestroyBullet();
             }
+        }
+        
+        public void DestroyBullet()
+        {
+            Destroy(gameObject);
         }
     }
 }
