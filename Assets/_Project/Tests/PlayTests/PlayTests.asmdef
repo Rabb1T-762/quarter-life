@@ -3,7 +3,12 @@
     "rootNamespace": "",
     "references": [
         "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner"
+        "UnityEditor.TestRunner",
+        "Scripts",
+        "Input",
+        "Unity.InputSystem",
+        "Unity.InputSystem.TestFramework",
+        "TestUtilities"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

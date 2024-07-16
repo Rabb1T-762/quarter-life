@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Reflection;
 using _Project.Scripts;
+using _Project.Tests.TestUtilities;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace _Project.Tests.EditorTests
 {
@@ -26,30 +24,30 @@ namespace _Project.Tests.EditorTests
             _inputManager = _player.AddComponent<InputManager>();
             _cameraController = _player.AddComponent<PlayerCameraController>();
             _weapon = _player.AddComponent<Weapon>();
-                
+
             GameObject groundCheckObject = new GameObject("GroundCheck");
             _groundCheck = groundCheckObject.transform;
             _groundCheck.position = Vector3.zero;
-            
-            SetPrivateField("groundCheck", _playerController, _groundCheck);
-            SetPrivateField("_controller", _playerController, _characterController);
-            SetPrivateField("_inputManager", _playerController, _inputManager);
-            SetPrivateField("_cameraController", _playerController, _cameraController);
-            SetPrivateField("mainWeapon", _playerController, _weapon);
 
-            SetPrivateSerializedField(_playerController, "playerMaxGroundedSpeed", 10f);
-            SetPrivateSerializedField(_playerController, "playerMaxAirborneSpeed", 15f);
-            SetPrivateSerializedField(_playerController, "playerWalkSpeedMultiplier", 0.5f);
-            SetPrivateSerializedField(_playerController, "playerCrouchSpeedMultiplier", 0.4f);
-            SetPrivateSerializedField(_playerController, "playerAcceleration", 100f);
-            SetPrivateSerializedField(_playerController, "transformCrouchHeight", 1f);
-            SetPrivateSerializedField(_playerController, "transformStandingHeight", 2f);
-            SetPrivateSerializedField(_playerController, "heightTransitionSpeed", 10f);
-            SetPrivateSerializedField(_playerController, "groundDistance", 0.2f);
-            SetPrivateSerializedField(_playerController, "groundMask", new LayerMask());
-            SetPrivateSerializedField(_playerController, "gravity", -9.8f);
-            SetPrivateSerializedField(_playerController, "jumpHeight", 2f);
-            SetPrivateSerializedField(_playerController, "jumpForceMultiplier", -2.0f);
+            TestHelper.SetPrivateField(_playerController, "groundCheck", _groundCheck);
+            TestHelper.SetPrivateField(_playerController, "_controller", _characterController);
+            TestHelper.SetPrivateField(_playerController, "_inputManager", _inputManager);
+            TestHelper.SetPrivateField(_playerController, "_cameraController", _cameraController);
+            TestHelper.SetPrivateField(_playerController, "mainWeapon", _weapon);
+
+            TestHelper.SetPrivateField(_playerController, "playerMaxGroundedSpeed", 10f);
+            TestHelper.SetPrivateField(_playerController, "playerMaxAirborneSpeed", 15f);
+            TestHelper.SetPrivateField(_playerController, "playerWalkSpeedMultiplier", 0.5f);
+            TestHelper.SetPrivateField(_playerController, "playerCrouchSpeedMultiplier", 0.4f);
+            TestHelper.SetPrivateField(_playerController, "playerAcceleration", 100f);
+            TestHelper.SetPrivateField(_playerController, "transformCrouchHeight", 1f);
+            TestHelper.SetPrivateField(_playerController, "transformStandingHeight", 2f);
+            TestHelper.SetPrivateField(_playerController, "heightTransitionSpeed", 10f);
+            TestHelper.SetPrivateField(_playerController, "groundDistance", 0.2f);
+            TestHelper.SetPrivateField(_playerController, "groundMask", new LayerMask());
+            TestHelper.SetPrivateField(_playerController, "gravity", -9.8f);
+            TestHelper.SetPrivateField(_playerController, "jumpHeight", 2f);
+            TestHelper.SetPrivateField(_playerController, "jumpForceMultiplier", -2.0f);
         }
 
         [TearDown]
@@ -57,98 +55,6 @@ namespace _Project.Tests.EditorTests
         {
             Object.DestroyImmediate(_player);
         }
-
-        [Test]
-        public void ProcessMove_Grounded_PlayerVelocityReset()
-        {
-            // Arrange
-            SetPrivateField("_playerVelocity", _playerController, new Vector3(0, -5, 0));
-
-            // Mock Physics.CheckSphere to always return true for this test
-            
-            // Act
-            InvokePrivateMethod(_playerController, "ProcessMove", new object[] {Vector3.zero, false, false, false});
-
-            // Assert
-            Vector3 playerVelocity = (Vector3)GetPrivateField("_playerVelocity", _playerController);
-            Assert.AreEqual(-2f, playerVelocity.y);
-        }
-
-        [Test]
-        public void Walk_MultipliesMovementMultiplierByWalkSpeed()
-        {
-            // Act
-            InvokePrivateMethod(_playerController, "Walk", null);
-
-            // Assert
-            float movementMultiplier = (float)GetPrivateField("_movementMultiplier", _playerController);
-            Assert.AreEqual(0.5f, movementMultiplier);
-        }
-
-        [Test]
-        public void Crouch_MultipliesMovementMultiplierByCrouchSpeed()
-        {
-            // Act
-            InvokePrivateMethod(_playerController, "Crouch", null);
-
-            // Assert
-            float movementMultiplier = (float)GetPrivateField("_movementMultiplier", _playerController);
-            float targetTransformHeight = (float)GetPrivateField("_targetTransformHeight", _playerController);
-            Assert.AreEqual(0.4f, movementMultiplier);
-            Assert.AreEqual(1f, targetTransformHeight);
-        }
-
-        [Test]
-        public void Jump_SetsPlayerVelocityYCorrectly()
-        {
-            // Act
-            InvokePrivateMethod(_playerController, "Jump", null);
-
-            // Assert
-            Vector3 playerVelocity = (Vector3)GetPrivateField("_playerVelocity", _playerController);
-            Assert.AreEqual(Mathf.Sqrt(2f * -2.0f * -9.8f), playerVelocity.y);
-        }
-
-        [UnityTest]
-        public IEnumerator HandleCharacterHeight_ChangesHeightCorrectly()
-        {
-            // Arrange
-            _characterController.height = 2f;
-            SetPrivateField("_targetTransformHeight", _playerController, 1f);
-
-            // Act
-            InvokePrivateMethod(_playerController, "HandleCharacterHeight", null);
-            yield return null; // Wait for a frame to allow height change
-
-            // Wait 100ms for height transition
-            yield return null;
-            
-            // Assert
-            Assert.AreEqual(1f, _characterController.height, 0.1f);
-        }
-
-        private void SetPrivateField(string fieldName, object target, object value)
-        {
-            FieldInfo field = target.GetType().GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
-            field.SetValue(target, value);
-        }
-
-        private void SetPrivateSerializedField(object target, string fieldName, object value)
-        {
-            FieldInfo field = target.GetType().GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
-            field.SetValue(target, value);
-        }
-
-        private object GetPrivateField(string fieldName, object target)
-        {
-            FieldInfo field = target.GetType().GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
-            return field.GetValue(target);
-        }
-        
-        private void InvokePrivateMethod(object target, string methodName, object[] parameters)
-        {
-            MethodInfo method = target.GetType().GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
-            method.Invoke(target, parameters);
-        }
     }
+
 }
