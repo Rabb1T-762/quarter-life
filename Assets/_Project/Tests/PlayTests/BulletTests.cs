@@ -1,16 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
 using _Project.Scripts;
+using JetBrains.Annotations;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
-using _Project.Tests.TestUtilities;
 
 
 public class BulletTests
 {
     private GameObject _bulletObject;
-    private Bullet _bulletScript;
+    [UsedImplicitly] private Bullet _bulletScript;
 
     [SetUp]
     public void SetUp()
@@ -51,13 +50,13 @@ public class BulletTests
         // Arrange 
         
         var colliderObject = new GameObject("ColliderObject");
-        var boxCollider = colliderObject.AddComponent<BoxCollider>();
-        // Position it in front of the bullet
+        colliderObject.AddComponent<BoxCollider>();
+        // Position it in front of the currentBullet
         colliderObject.transform.position = new Vector3(0, 0, 5);
 
         
         // Act 
-        // Position bullet to collide with the colliderObject
+        // Position currentBullet to collide with the colliderObject
         _bulletObject.transform.position = new Vector3(0, 0, 0);
         _bulletObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 100); 
         

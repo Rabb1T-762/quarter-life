@@ -5,7 +5,8 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "Scripts",
-        "TestUtilities"
+        "TestUtilities",
+        "Mocks"
     ],
     "includePlatforms": [
         "Editor"

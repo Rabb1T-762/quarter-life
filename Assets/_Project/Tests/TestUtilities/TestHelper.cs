@@ -62,5 +62,16 @@ namespace _Project.Tests.TestUtilities
             // return the method found on the object
             return method;
         }
+        
+        // Generalized method to get a private field from an object
+        public static T GetPrivateField<T>(object obj, string fieldName)
+        {
+            var field = obj.GetType().GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+            if (field == null)
+            {
+                throw new InvalidOperationException($"Field '{fieldName}' not found in type '{obj.GetType()}'.");
+            }
+            return (T)field.GetValue(obj);
+        }
     }
 }
