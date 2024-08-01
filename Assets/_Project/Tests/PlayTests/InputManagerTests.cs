@@ -6,340 +6,337 @@ using UnityEngine.InputSystem;
 using UnityEngine.TestTools;
 using Object = UnityEngine.Object;
 
-namespace _Project.Tests.PlayMode
+public class PlayerInputHandlerTests
 {
-    public class PlayerInputHandlerTests
+    private GameObject _playerGameObject;
+    private InputManager _playerInputHandler;
+    private InputTestFixture _inputTestFixture;
+    private Keyboard _keyboard;
+    private Mouse _mouse;
+
+    [SetUp]
+    public void Setup()
     {
-        private GameObject _playerGameObject;
-        private InputManager _playerInputHandler;
-        private InputTestFixture _inputTestFixture;
-        private Keyboard _keyboard;
-        private Mouse _mouse;
+        // Create a new GameObject for the player
+        _playerGameObject = new GameObject("Player");
+        _playerInputHandler = _playerGameObject.AddComponent<InputManager>();
+        _inputTestFixture = new InputTestFixture();
 
-        [SetUp]
-        public void Setup()
-        {
-            // Create a new GameObject for the player
-            _playerGameObject = new GameObject("Player");
-            _playerInputHandler = _playerGameObject.AddComponent<InputManager>();
-            _inputTestFixture = new InputTestFixture();
+        _keyboard = InputSystem.AddDevice<Keyboard>();
+        _mouse = InputSystem.AddDevice<Mouse>();
+    }
 
-            _keyboard = InputSystem.AddDevice<Keyboard>();
-            _mouse = InputSystem.AddDevice<Mouse>();
-        }
+    [TearDown]
+    public void TearDown()
+    {
+        Object.DestroyImmediate(_playerGameObject);
 
-        [TearDown]
-        public void TearDown()
-        {
-            Object.DestroyImmediate(_playerGameObject);
-            
-            InputSystem.RemoveDevice(_keyboard);
-            InputSystem.RemoveDevice(_mouse);
-            _inputTestFixture.TearDown();
-        }
+        InputSystem.RemoveDevice(_keyboard);
+        InputSystem.RemoveDevice(_mouse);
+        _inputTestFixture.TearDown();
+    }
 
-        [UnityTest]
-        public IEnumerator GetMoveInput_ReturnsCorrectVector_WhenForwardKeyPressedOnKeyboard()
-        {
-            // Arrange 
-            Vector3 expected = new Vector3(0, 0, 1);
+    [UnityTest]
+    public IEnumerator GetMoveInput_ReturnsCorrectVector_WhenForwardKeyPressedOnKeyboard()
+    {
+        // Arrange 
+        Vector3 expected = new Vector3(0, 0, 1);
 
-            // Act 
-            _inputTestFixture.Press(_keyboard.wKey);
-            yield return null; // Wait for the next frame to allow input to update
-            Vector3 actual = _playerInputHandler.GetMoveInput();
+        // Act 
+        _inputTestFixture.Press(_keyboard.wKey);
+        yield return null; // Wait for the next frame to allow input to update
+        Vector3 actual = _playerInputHandler.GetMoveInput();
 
-            _inputTestFixture.Release(_keyboard.wKey);
+        _inputTestFixture.Release(_keyboard.wKey);
 
-            // Assert
-            Assert.That(expected == actual);
-        }
-        
-        [UnityTest]
-        public IEnumerator GetLookInput_ReturnsCorrectVector_WhenMouseMoved()
-        {
-            // Arrange
-            Vector2 expected = new Vector2(10f, 5f); // Example expected mouse movement input
+        // Assert
+        Assert.That(expected == actual);
+    }
 
-            // Simulate mouse movement
-            _inputTestFixture.Move(_mouse.position, new Vector2(10f, 5f));
+    [UnityTest]
+    public IEnumerator GetLookInput_ReturnsCorrectVector_WhenMouseMoved()
+    {
+        // Arrange
+        Vector2 expected = new Vector2(10f, 5f); // Example expected mouse movement input
 
-            // Act
-            Vector2 actual = _playerInputHandler.GetLookInput();
+        // Simulate mouse movement
+        _inputTestFixture.Move(_mouse.position, new Vector2(10f, 5f));
 
-            // Assert
-            Assert.AreEqual(expected, actual);
-            
-            // Cleanup
-            _inputTestFixture.Move(_mouse.position, new Vector2(0,0));
-            yield return null;
-        }
+        // Act
+        Vector2 actual = _playerInputHandler.GetLookInput();
 
-        [UnityTest]
-        public IEnumerator GetLookInput_ReturnsZeroVector_WhenMouseNotMoved()
-        {
-            // Arrange
-            _inputTestFixture.Set(_mouse.position, new Vector2(0,0));
-            Vector2 expected = Vector2.zero;
+        // Assert
+        Assert.AreEqual(expected, actual);
 
-            // Waiting one frame for mouse.delta to reset to zero
-            // in case of mouse not at the above vector
-            yield return null; 
+        // Cleanup
+        _inputTestFixture.Move(_mouse.position, new Vector2(0, 0));
+        yield return null;
+    }
 
-            // Act
-            Vector2 actual = _playerInputHandler.GetLookInput();
+    [UnityTest]
+    public IEnumerator GetLookInput_ReturnsZeroVector_WhenMouseNotMoved()
+    {
+        // Arrange
+        _inputTestFixture.Set(_mouse.position, new Vector2(0, 0));
+        Vector2 expected = Vector2.zero;
 
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
-        
-        [UnityTest]
-        public IEnumerator GetLookInput_ReturnsPositiveY_WhenMouseMovedUp()
-        {
-            // Arrange
-            _inputTestFixture.Move(_mouse.position, new Vector2(0, 100));
+        // Waiting one frame for mouse.delta to reset to zero
+        // in case of mouse not at the above vector
+        yield return null;
 
-            // Act
-            Vector2 actual = _playerInputHandler.GetLookInput();
+        // Act
+        Vector2 actual = _playerInputHandler.GetLookInput();
 
-            // Assert
-            Assert.Greater(actual.y, 0);
-            yield return null;
-        }
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
 
-        [UnityTest]
-        public IEnumerator GetLookInput_ReturnsNegativeY_WhenMouseMovedDown()
-        {
-            // Arrange
-            _inputTestFixture.Move(_mouse.position, new Vector2(0, -100));
+    [UnityTest]
+    public IEnumerator GetLookInput_ReturnsPositiveY_WhenMouseMovedUp()
+    {
+        // Arrange
+        _inputTestFixture.Move(_mouse.position, new Vector2(0, 100));
 
-            // Act
-            Vector2 actual = _playerInputHandler.GetLookInput();
+        // Act
+        Vector2 actual = _playerInputHandler.GetLookInput();
 
-            // Assert
-            Assert.Less(actual.y, 0);
-            yield return null;
-        }
+        // Assert
+        Assert.Greater(actual.y, 0);
+        yield return null;
+    }
 
-        [UnityTest]
-        public IEnumerator GetLookInput_ReturnsNegativeX_WhenMouseMovedLeft()
-        {
-            // Arrange
-            _inputTestFixture.Move(_mouse.position, new Vector2(-100, 0));
+    [UnityTest]
+    public IEnumerator GetLookInput_ReturnsNegativeY_WhenMouseMovedDown()
+    {
+        // Arrange
+        _inputTestFixture.Move(_mouse.position, new Vector2(0, -100));
 
-            // Act
-            Vector2 actual = _playerInputHandler.GetLookInput();
+        // Act
+        Vector2 actual = _playerInputHandler.GetLookInput();
 
-            // Assert
-            Assert.Less(actual.x, 0);
-            yield return null;
-        }
+        // Assert
+        Assert.Less(actual.y, 0);
+        yield return null;
+    }
 
-        [UnityTest]
-        public IEnumerator GetLookInput_ReturnsPositiveX_WhenMouseMovedRight()
-        {
-            // Arrange
-            _inputTestFixture.Move(_mouse.position, new Vector2(100, 0));
+    [UnityTest]
+    public IEnumerator GetLookInput_ReturnsNegativeX_WhenMouseMovedLeft()
+    {
+        // Arrange
+        _inputTestFixture.Move(_mouse.position, new Vector2(-100, 0));
 
-            // Act
-            Vector2 actual = _playerInputHandler.GetLookInput();
+        // Act
+        Vector2 actual = _playerInputHandler.GetLookInput();
 
-            // Assert
-            Assert.Greater(actual.x, 0);
-            yield return null;
-        }
+        // Assert
+        Assert.Less(actual.x, 0);
+        yield return null;
+    }
 
-        [UnityTest]
-        public IEnumerator GetMoveInput_ReturnsCorrectVector_WhenBackwardsKeyPressedOnKeyboard()
-        {
-            // Arrange 
-            Vector3 expected = new Vector3(0, 0, -1);
+    [UnityTest]
+    public IEnumerator GetLookInput_ReturnsPositiveX_WhenMouseMovedRight()
+    {
+        // Arrange
+        _inputTestFixture.Move(_mouse.position, new Vector2(100, 0));
 
-            // Act 
-            _inputTestFixture.Press(_keyboard.sKey);
-            yield return null; // Wait for the next frame to allow input to update
-            Vector3 actual = _playerInputHandler.GetMoveInput();
+        // Act
+        Vector2 actual = _playerInputHandler.GetLookInput();
 
-            _inputTestFixture.Release(_keyboard.sKey);
+        // Assert
+        Assert.Greater(actual.x, 0);
+        yield return null;
+    }
 
-            // Assert
-            Assert.That(actual, Is.EqualTo(expected));
-        }
+    [UnityTest]
+    public IEnumerator GetMoveInput_ReturnsCorrectVector_WhenBackwardsKeyPressedOnKeyboard()
+    {
+        // Arrange 
+        Vector3 expected = new Vector3(0, 0, -1);
 
-        [UnityTest]
-        public IEnumerator GetMoveInput_ReturnsCorrectVector_WhenLeftKeyPressedOnKeyboard()
-        {
-            // Arrange 
-            Vector3 expected = new Vector3(-1, 0, 0);
+        // Act 
+        _inputTestFixture.Press(_keyboard.sKey);
+        yield return null; // Wait for the next frame to allow input to update
+        Vector3 actual = _playerInputHandler.GetMoveInput();
 
-            // Act 
-            _inputTestFixture.Press(_keyboard.aKey);
-            yield return null; // Wait for the next frame to allow input to update
-            Vector3 actual = _playerInputHandler.GetMoveInput();
+        _inputTestFixture.Release(_keyboard.sKey);
 
-            _inputTestFixture.Release(_keyboard.aKey);
+        // Assert
+        Assert.That(actual, Is.EqualTo(expected));
+    }
 
-            // Assert
-            Assert.That(actual, Is.EqualTo(expected));
-        }
+    [UnityTest]
+    public IEnumerator GetMoveInput_ReturnsCorrectVector_WhenLeftKeyPressedOnKeyboard()
+    {
+        // Arrange 
+        Vector3 expected = new Vector3(-1, 0, 0);
 
-        [UnityTest]
-        public IEnumerator GetMoveInput_ReturnsCorrectVector_WhenRightKeyPressedOnKeyboard()
-        {
-            // Arrange 
-            Vector3 expected = new Vector3(1, 0, 0);
+        // Act 
+        _inputTestFixture.Press(_keyboard.aKey);
+        yield return null; // Wait for the next frame to allow input to update
+        Vector3 actual = _playerInputHandler.GetMoveInput();
 
-            // Act 
-            _inputTestFixture.Press(_keyboard.dKey);
-            yield return null; // Wait for the next frame to allow input to update
-            Vector3 actual = _playerInputHandler.GetMoveInput();
+        _inputTestFixture.Release(_keyboard.aKey);
 
-            _inputTestFixture.Release(_keyboard.dKey);
+        // Assert
+        Assert.That(actual, Is.EqualTo(expected));
+    }
 
-            // Assert
-            Assert.That(actual, Is.EqualTo(expected));
-        }
+    [UnityTest]
+    public IEnumerator GetMoveInput_ReturnsCorrectVector_WhenRightKeyPressedOnKeyboard()
+    {
+        // Arrange 
+        Vector3 expected = new Vector3(1, 0, 0);
 
-        [UnityTest]
-        public IEnumerator GetMoveInput_ReturnsCorrectVector_WhenMovingDiagonally()
-        {
-            // Arrange
-            Vector3 expected = new Vector3(0.71f, 0f, 0.71f);
+        // Act 
+        _inputTestFixture.Press(_keyboard.dKey);
+        yield return null; // Wait for the next frame to allow input to update
+        Vector3 actual = _playerInputHandler.GetMoveInput();
 
-            // Act
-            _inputTestFixture.Press(_keyboard.wKey);
-            _inputTestFixture.Press(_keyboard.dKey);
-            yield return null; // Wait for the next frame to allow input to update
+        _inputTestFixture.Release(_keyboard.dKey);
 
-            Vector3 actual = _playerInputHandler.GetMoveInput();
+        // Assert
+        Assert.That(actual, Is.EqualTo(expected));
+    }
 
-            _inputTestFixture.Release(_keyboard.wKey);
-            _inputTestFixture.Release(_keyboard.dKey);
-    
-            // Assert
-            Debug.Log("Actual: " + actual + "  Expected: " + expected);
-            Assert.AreEqual(expected.x, actual.x, 0.01f);
-            Assert.AreEqual(expected.y, actual.y, 0.01f);
-            Assert.AreEqual(expected.z, actual.z, 0.01f);
-        }
-        
-        [UnityTest]
-        public IEnumerator GetJumpInput_ReturnsTrue_WhenJumpKeyPressedOnKeyboard()
-        {
-            // Arrange 
-            // Act 
-            _inputTestFixture.Press(_keyboard.spaceKey);
-            yield return null; // Wait for the next frame to allow input to update
-            bool actual = _playerInputHandler.GetJumpInput();
+    [UnityTest]
+    public IEnumerator GetMoveInput_ReturnsCorrectVector_WhenMovingDiagonally()
+    {
+        // Arrange
+        Vector3 expected = new Vector3(0.71f, 0f, 0.71f);
 
-            _inputTestFixture.Release(_keyboard.spaceKey);
+        // Act
+        _inputTestFixture.Press(_keyboard.wKey);
+        _inputTestFixture.Press(_keyboard.dKey);
+        yield return null; // Wait for the next frame to allow input to update
 
-            // Assert
-            Assert.That(actual, Is.EqualTo(true));
-        }
+        Vector3 actual = _playerInputHandler.GetMoveInput();
 
-        [UnityTest]
-        public IEnumerator GetJumpInput_ReturnsFalse_WhenJumpKeyNotPressed()
-        {
-            // Arrange 
-            // Act 
-            _inputTestFixture.Release(_keyboard.spaceKey);
-            yield return null; // Wait for the next frame to allow input to update
-            bool actual = _playerInputHandler.GetJumpInput();
+        _inputTestFixture.Release(_keyboard.wKey);
+        _inputTestFixture.Release(_keyboard.dKey);
 
-            // Assert
-            Assert.That(actual, Is.EqualTo(false));
-        }
-        
-        [UnityTest]
-        public IEnumerator GetWalkInputHeld_ReturnsTrue_WhenWalkKeyPressedOnKeyboard()
-        {
-            // Arrange 
+        // Assert
+        Debug.Log("Actual: " + actual + "  Expected: " + expected);
+        Assert.AreEqual(expected.x, actual.x, 0.01f);
+        Assert.AreEqual(expected.y, actual.y, 0.01f);
+        Assert.AreEqual(expected.z, actual.z, 0.01f);
+    }
 
-            // Act 
-            _inputTestFixture.Press(_keyboard.shiftKey); // Assuming shift is the walk key
-            yield return null; // Wait for the next frame to allow input to update
-            bool actual = _playerInputHandler.GetWalkInputHeld();
+    [UnityTest]
+    public IEnumerator GetJumpInput_ReturnsTrue_WhenJumpKeyPressedOnKeyboard()
+    {
+        // Arrange 
+        // Act 
+        _inputTestFixture.Press(_keyboard.spaceKey);
+        yield return null; // Wait for the next frame to allow input to update
+        bool actual = _playerInputHandler.GetJumpInput();
 
-            _inputTestFixture.Release(_keyboard.shiftKey);
+        _inputTestFixture.Release(_keyboard.spaceKey);
 
-            // Assert
-            Assert.That(actual, Is.EqualTo(true));
-        }
+        // Assert
+        Assert.That(actual, Is.EqualTo(true));
+    }
 
-        [UnityTest]
-        public IEnumerator GetWalkInputHeld_ReturnsFalse_WhenWalkKeyNotPressed()
-        {
-            // Arrange 
+    [UnityTest]
+    public IEnumerator GetJumpInput_ReturnsFalse_WhenJumpKeyNotPressed()
+    {
+        // Arrange 
+        // Act 
+        _inputTestFixture.Release(_keyboard.spaceKey);
+        yield return null; // Wait for the next frame to allow input to update
+        bool actual = _playerInputHandler.GetJumpInput();
 
-            // Act 
-            _inputTestFixture.Release(_keyboard.shiftKey); // Ensure the walk key is not pressed
-            yield return null; // Wait for the next frame to allow input to update
-            bool actual = _playerInputHandler.GetWalkInputHeld();
+        // Assert
+        Assert.That(actual, Is.EqualTo(false));
+    }
 
-            // Assert
-            Assert.That(actual, Is.EqualTo(false));
-        }
-        
-        [UnityTest]
-        public IEnumerator GetCrouchInputHeld_ReturnsTrue_WhenCrouchKeyPressedOnKeyboard()
-        {
-            // Arrange
+    [UnityTest]
+    public IEnumerator GetWalkInputHeld_ReturnsTrue_WhenWalkKeyPressedOnKeyboard()
+    {
+        // Arrange 
 
-            // Act
-            _inputTestFixture.Press(_keyboard.ctrlKey); // Assuming ctrl is the crouch key
-            yield return null; // Wait for the next frame to allow input to update
-            bool actual = _playerInputHandler.GetCrouchInputHeld();
+        // Act 
+        _inputTestFixture.Press(_keyboard.shiftKey); // Assuming shift is the walk key
+        yield return null; // Wait for the next frame to allow input to update
+        bool actual = _playerInputHandler.GetWalkInputHeld();
 
-            _inputTestFixture.Release(_keyboard.ctrlKey);
+        _inputTestFixture.Release(_keyboard.shiftKey);
 
-            // Assert
-            Assert.That(actual, Is.EqualTo(true));
-        }
+        // Assert
+        Assert.That(actual, Is.EqualTo(true));
+    }
 
-        [UnityTest]
-        public IEnumerator GetCrouchInputHeld_ReturnsFalse_WhenCrouchKeyNotPressed()
-        {
-            // Arrange
+    [UnityTest]
+    public IEnumerator GetWalkInputHeld_ReturnsFalse_WhenWalkKeyNotPressed()
+    {
+        // Arrange 
 
-            // Act
-            _inputTestFixture.Release(_keyboard.ctrlKey); // Ensure the crouch key is not pressed
-            yield return null; // Wait for the next frame to allow input to update
-            bool actual = _playerInputHandler.GetCrouchInputHeld();
+        // Act 
+        _inputTestFixture.Release(_keyboard.shiftKey); // Ensure the walk key is not pressed
+        yield return null; // Wait for the next frame to allow input to update
+        bool actual = _playerInputHandler.GetWalkInputHeld();
 
-            // Assert
-            Assert.That(actual, Is.EqualTo(false));
-        }
-        
-        [UnityTest]
-        public IEnumerator GetTriggerInputPressed_ReturnsTrue_WhenShootKeyPressedOnKeyboard()
-        {
-            // Arrange
+        // Assert
+        Assert.That(actual, Is.EqualTo(false));
+    }
 
-            // Act
-            _inputTestFixture.Press(_mouse.leftButton); // Assuming space is the shoot key
-            yield return null; // Wait for the next frame to allow input to update
-            bool actual = _playerInputHandler.GetTriggerInputPressed();
+    [UnityTest]
+    public IEnumerator GetCrouchInputHeld_ReturnsTrue_WhenCrouchKeyPressedOnKeyboard()
+    {
+        // Arrange
 
-            _inputTestFixture.Release(_mouse.leftButton);
+        // Act
+        _inputTestFixture.Press(_keyboard.ctrlKey); // Assuming ctrl is the crouch key
+        yield return null; // Wait for the next frame to allow input to update
+        bool actual = _playerInputHandler.GetCrouchInputHeld();
 
-            // Assert
-            Assert.That(actual, Is.EqualTo(true));
-        }
+        _inputTestFixture.Release(_keyboard.ctrlKey);
 
-        [UnityTest]
-        public IEnumerator GetTriggerInputPressed_ReturnsFalse_WhenShootKeyNotPressed()
-        {
-            // Arrange
-            // Ensure the shoot key is not pressed
-            _inputTestFixture.Release(_mouse.leftButton);
-            yield return null; // Wait for the next frame to allow input to update
+        // Assert
+        Assert.That(actual, Is.EqualTo(true));
+    }
 
-            // Act
-            bool actual = _playerInputHandler.GetTriggerInputPressed();
+    [UnityTest]
+    public IEnumerator GetCrouchInputHeld_ReturnsFalse_WhenCrouchKeyNotPressed()
+    {
+        // Arrange
 
-            // Assert
-            Assert.That(actual, Is.EqualTo(false));
-        }
+        // Act
+        _inputTestFixture.Release(_keyboard.ctrlKey); // Ensure the crouch key is not pressed
+        yield return null; // Wait for the next frame to allow input to update
+        bool actual = _playerInputHandler.GetCrouchInputHeld();
+
+        // Assert
+        Assert.That(actual, Is.EqualTo(false));
+    }
+
+    [UnityTest]
+    public IEnumerator GetTriggerInputPressed_ReturnsTrue_WhenShootKeyPressedOnKeyboard()
+    {
+        // Arrange
+
+        // Act
+        _inputTestFixture.Press(_mouse.leftButton); // Assuming space is the shoot key
+        yield return null; // Wait for the next frame to allow input to update
+        bool actual = _playerInputHandler.GetTriggerInputPressed();
+
+        _inputTestFixture.Release(_mouse.leftButton);
+
+        // Assert
+        Assert.That(actual, Is.EqualTo(true));
+    }
+
+    [UnityTest]
+    public IEnumerator GetTriggerInputPressed_ReturnsFalse_WhenShootKeyNotPressed()
+    {
+        // Arrange
+        // Ensure the shoot key is not pressed
+        _inputTestFixture.Release(_mouse.leftButton);
+        yield return null; // Wait for the next frame to allow input to update
+
+        // Act
+        bool actual = _playerInputHandler.GetTriggerInputPressed();
+
+        // Assert
+        Assert.That(actual, Is.EqualTo(false));
     }
 }

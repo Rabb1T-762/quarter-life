@@ -1,5 +1,10 @@
+using System;
 using System.Collections;
+using JetBrains.Annotations;
+using NSubstitute;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Project.Scripts
 {
@@ -10,21 +15,29 @@ namespace _Project.Scripts
         [SerializeField] private float bulletVelocity = 30f;
         [SerializeField] private float bulletPrefabLifetime = 3f;
 
+        [CanBeNull] private GameObject _currentBullet;
+
         public void FireWeapon()
         {
-            // Instantiate the bullet
-            GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
-            // Shoot the bullet
-            Rigidbody rb = bullet.GetComponent<Rigidbody>();
-            rb.AddForce(bulletSpawn.forward.normalized * bulletVelocity, ForceMode.Impulse);
-            // Destroy the bullet after a certain amount of time
-            StartCoroutine(DestroyBulletAfterTime(bullet, bulletPrefabLifetime));
+            _currentBullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
+            if (_currentBullet != null)
+            {
+                Rigidbody rb = _currentBullet.GetComponent<Rigidbody>();
+                rb.AddForce(bulletSpawn.forward.normalized * bulletVelocity, ForceMode.Impulse);
+            }
+
+            // Destroy the _currentBullet object if no impact
+            StartCoroutine(DestroyBulletAfterTime(_currentBullet, bulletPrefabLifetime));
         }
 
-        private IEnumerator DestroyBulletAfterTime(GameObject bullet, float delay)
+
+        private IEnumerator DestroyBulletAfterTime(GameObject bulletObject, float delay)
         {
             yield return new WaitForSeconds(delay);
-            Destroy(bullet);
+            if (bulletObject)
+            {
+                bulletObject.GetComponent<Bullet>().DestroyBullet();
+            }
         }
     }
 }

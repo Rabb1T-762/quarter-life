@@ -18,15 +18,15 @@ namespace _Project.Scripts
         [SerializeField] private float swayXAmplitude = 1f;
         [SerializeField] private float swayXFrequency = 1f;
         // The oscillations are time-dependent, so t = 0 is initial.
-        private float swayTime = 0f;
+        private float _swayTime;
         // Vector representing the sway movement.
-        private Vector3 swayPosition;
+        private Vector3 _swayPosition;
         // Vector representing the origin of the given transform.
-        private Vector3 startPosition;
+        private Vector3 _startPosition;
 
-        void Awake()
+        void Start()
         {
-            startPosition = transform.localPosition;
+            _startPosition = transform.localPosition;
         }
 
         void Update() 
@@ -36,21 +36,21 @@ namespace _Project.Scripts
 
         private void CalculateSway()
         {
-            Vector3 targetPosition = SwayCurve(swayTime, swayXAmplitude, swayXFrequency, swayYAmplitude, swayYFrequency) / swayScale;
+            Vector3 targetPosition = SwayCurve(_swayTime, swayXAmplitude, swayXFrequency, swayYAmplitude, swayYFrequency) / swayScale;
 
-            swayPosition = Vector3.Lerp(swayPosition, targetPosition, Time.smoothDeltaTime * swayLerpSpeed);
+            _swayPosition = Vector3.Lerp(_swayPosition, targetPosition, Time.smoothDeltaTime * swayLerpSpeed);
 
-            swayTime += Time.deltaTime;
+            _swayTime += Time.deltaTime;
 
-            transform.localPosition = startPosition + swayPosition;
+            transform.localPosition = _startPosition + _swayPosition;
         }
         // This function returns an instantaneous vector representing the following equations:
         // f(t) = A * sin(a*t + d) and g(t) = B * sin(b*t)
         // Together, these equations describe time-dependent oscillations in the x and y axes at different angular frequencies.
-        private Vector3 SwayCurve(float Time, float curveXAmplitude, float curveXFrequency, float curveYAmplitude, float curveYFrequency, float apparentRotation = Mathf.PI) 
+        private Vector3 SwayCurve(float time, float curveXAmplitude, float curveXFrequency, float curveYAmplitude, float curveYFrequency, float apparentRotation = Mathf.PI) 
         {
-            float curveX = curveXAmplitude * Mathf.Sin(curveXFrequency * Time);
-            float curveY = curveYAmplitude * Mathf.Sin(curveYFrequency * Time + apparentRotation);
+            float curveX = curveXAmplitude * Mathf.Sin(curveXFrequency * time);
+            float curveY = curveYAmplitude * Mathf.Sin(curveYFrequency * time + apparentRotation);
             return new Vector3(curveX, curveY);
         }
 

@@ -16,7 +16,7 @@ namespace _Project.Scripts
             Cursor.visible = false;
         }
 
-        public Vector3 GetMoveInput()
+        public virtual Vector3 GetMoveInput()
         {
             Vector3 move = new Vector3(
                 _onFoot.Movement.ReadValue<Vector2>().x, 0f, 
@@ -26,27 +26,27 @@ namespace _Project.Scripts
             return move;
         }
     
-        public bool GetJumpInput()
+        public virtual bool GetJumpInput()
         {
             return _onFoot.Jump.WasPressedThisFrame();
         }
 
-        public bool GetWalkInputHeld()
+        public virtual bool GetWalkInputHeld()
         {
             return _onFoot.Walk.IsPressed();
         }
     
-        public bool GetCrouchInputHeld()
+        public virtual bool GetCrouchInputHeld()
         {
             return _onFoot.Crouch.IsPressed();
         }
 
-        public Vector2 GetLookInput()
+        public virtual Vector2 GetLookInput()
         {
             return _onFoot.Look.ReadValue<Vector2>();
         }
     
-        public bool GetTriggerInputPressed()
+        public virtual bool GetTriggerInputPressed()
         {
             return _onFoot.Shoot.WasPressedThisFrame();
         }
