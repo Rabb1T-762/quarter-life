@@ -18,13 +18,13 @@ namespace _Project.Scripts
         [SerializeField] private float swayXAmplitude = 1f;
         [SerializeField] private float swayXFrequency = 1f;
         // The oscillations are time-dependent, so t = 0 is initial.
-        private float _swayTime = 0f;
+        private float _swayTime;
         // Vector representing the sway movement.
         private Vector3 _swayPosition;
         // Vector representing the origin of the given transform.
         private Vector3 _startPosition;
 
-        void Awake()
+        void Start()
         {
             _startPosition = transform.localPosition;
         }
@@ -47,10 +47,10 @@ namespace _Project.Scripts
         // This function returns an instantaneous vector representing the following equations:
         // f(t) = A * sin(a*t + d) and g(t) = B * sin(b*t)
         // Together, these equations describe time-dependent oscillations in the x and y axes at different angular frequencies.
-        private Vector3 SwayCurve(float Time, float curveXAmplitude, float curveXFrequency, float curveYAmplitude, float curveYFrequency, float apparentRotation = Mathf.PI) 
+        private Vector3 SwayCurve(float time, float curveXAmplitude, float curveXFrequency, float curveYAmplitude, float curveYFrequency, float apparentRotation = Mathf.PI) 
         {
-            float curveX = curveXAmplitude * Mathf.Sin(curveXFrequency * Time);
-            float curveY = curveYAmplitude * Mathf.Sin(curveYFrequency * Time + apparentRotation);
+            float curveX = curveXAmplitude * Mathf.Sin(curveXFrequency * time);
+            float curveY = curveYAmplitude * Mathf.Sin(curveYFrequency * time + apparentRotation);
             return new Vector3(curveX, curveY);
         }
 

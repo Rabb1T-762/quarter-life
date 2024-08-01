@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace _Project.Scripts
@@ -9,13 +10,19 @@ namespace _Project.Scripts
             if (collision.gameObject.CompareTag("Target"))
             {
                 print("Hit " + collision.gameObject.name + "!");
-                Destroy(gameObject);
+                DestroyBullet();
             }
         
             if (collision.gameObject)
             {
-                Destroy(gameObject);
+                DestroyBullet();
             }
+        }
+        
+        public virtual void DestroyBullet()
+        {
+            Debug.Log("Destroyed Bullet");
+            Destroy(gameObject);
         }
     }
 }

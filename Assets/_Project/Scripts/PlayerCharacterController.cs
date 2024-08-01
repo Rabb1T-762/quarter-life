@@ -68,7 +68,7 @@ namespace _Project.Scripts
         private void ProcessMove(Vector3 moveDirection, bool jumpInput, bool walkInput, bool crouchInput)
         {
             _isMoving = _lastPosition != gameObject.transform.position;
-        
+
             // Grounded check
             _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -96,7 +96,7 @@ namespace _Project.Scripts
             }
 
             // Update the character height
-            HandleCharacterHeight();
+            HandleCharacterHeightChange();
 
             // calculate target velocity
             _targetVelocity = ((_isGrounded) ? playerMaxGroundedSpeed : playerMaxAirborneSpeed) * _movementMultiplier;
@@ -124,7 +124,6 @@ namespace _Project.Scripts
             // Executing the jump
             _controller.Move(_playerVelocity * Time.deltaTime);
 
-
             _lastPosition = gameObject.transform.position;
         }
 
@@ -146,14 +145,23 @@ namespace _Project.Scripts
             _targetTransformHeight = transformCrouchHeight;
         }
 
-        private void HandleCharacterHeight()
+        private void HandleCharacterHeightChange()
+        {
+            UpdateCharacterHeight();
+            UpdateGroundCheckPosition();
+        }
+
+        private void UpdateCharacterHeight()
         {
             if (Math.Abs(_controller.height - _targetTransformHeight) > 0.001f)
             {
                 _controller.height = Mathf.Lerp(_controller.height, _targetTransformHeight,
                     Time.deltaTime * heightTransitionSpeed);
             }
+        }
 
+        private void UpdateGroundCheckPosition()
+        {
             // calculate the center of the character controller
             Vector3 playerObjectBottom = _controller.center - new Vector3(0, _controller.height / 2, 0);
 
