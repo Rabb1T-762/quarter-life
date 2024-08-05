@@ -1,10 +1,6 @@
-using System;
 using System.Collections;
 using JetBrains.Annotations;
-using NSubstitute;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Project.Scripts
 {

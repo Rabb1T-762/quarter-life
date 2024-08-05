@@ -7,9 +7,17 @@ public class PlayerCameraController : MonoBehaviour
     [SerializeField] private float ySensitivity = 30f;
     [SerializeField] private float topClamp = -89f;
     [SerializeField] private float bottomClamp = 89f;
+    [SerializeField] private CursorLockMode cursorLockMode = CursorLockMode.Locked;
+    [SerializeField] private bool cursorVisible;
 
     private float _xRotation;
     private float _yRotation;
+
+    private void Start()
+    {
+        Cursor.lockState = cursorLockMode;
+        Cursor.visible = cursorVisible;
+    }
 
     public virtual void ProcessLook(Vector2 input)
     {

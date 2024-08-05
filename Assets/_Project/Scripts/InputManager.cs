@@ -12,8 +12,8 @@ namespace _Project.Scripts
             _playerInput = new PlayerInput();
             _onFoot = _playerInput.OnFoot;
 
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            // Cursor.lockState = CursorLockMode.Locked;
+            // Cursor.visible = false;
         }
 
         public virtual Vector3 GetMoveInput()
