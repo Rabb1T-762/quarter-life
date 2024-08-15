@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace ScifiOfficeLite.Scripts {
+namespace ScifiOffice {
     public class DemoFirstPersonController : MonoBehaviour {
 
         Rigidbody rb;
