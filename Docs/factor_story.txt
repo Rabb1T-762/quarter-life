@@ -1,0 +1,143 @@
+CEO and head-researcher
+
+CEO: typical ambitious, trying to achieve moral high ground through their achievements (ends justify the means)
+
+researcher: obsessed with human experimentation and has a god complex.
+	Has been at the forefront of this field of research for a very long time.
+	His research has been shunned for being "unethical".
+	He views everyone around him as inferior, unintelligent beings as a result.
+	"They should be the subjects in my experiments instead".
+
+Next int: 9
+
+===================================================================================================
+Start:
+
+[Name] to be decided
+
+Voice (fading in): "[Name]... [Name]!"
+
+Player bangs their head on the bottom of the desk after waking up.
+
+A superior is yelling at the player. 
+
+The player is still dazed while waking up.
+
+Superior: "What the hell is wrong with you!?"
+	  "How many times have we warned you to not miss the update time for suits!"
+	  "The sixth generation suits are being used today! Do you want the blood of our esteemed researchers on YOUR hands!?"
+	  "If you don't, I suggest you get it working right now!"
+
+The player gets up and walks to a panel on the wall.
+The panel asks for a username and password.
+[username to be decided]
+The player types in an absurdly long password.
+
+Cutscene transitions into a tutorial of the hacking minigame.
+*context: In order to gain access to certain features, the player needs to authenticate with the system. 
+	  This might be changed a bit later, when the player needs to hack into the system to do weirder stuff.
+
+Minigame transitions back into cutscene.
+Superior: ""
+
+Superior leaves.
+
+Player looks around and transitions into gameplay.
+
+The area is a small office. 
+The first objective is to pick up your coffee mug on your desk (first introduction to interaction system).
+You want to go get coffee, but you don't have your keycard on you, so the next objective is to find a keycard in the office (introduction to basic movement, forcing the player to look around their environment for a bit).
+
+With keycard picked up, the player can open the door.
+
+You start walking down the hallway, and as soon as you reach the T-junction, a cutscene starts.
+
+There's one or two other researches running away screaming (they are running to the left).
+
+You look to the right down towards the end of the hall at a large window (much like the windows seen in the small office).
+
+Suddenly, a small creature bursts through the glass and starts chasing the player.
+
+Rounding the corner, there's a small group of security guards that are shooting, only to be devoured by an even larger creature.
+
+You are caught between the two creatures, so you turn right into an office, but trip over something.
+
+Looking behind, the small creature is still pursuing you.
+
+You see the body of a security guard with a pistol lying on the ground beside it.
+
+You grab the pistol, point it at the creature, and *click*.
+You smack the pistol on the side, thinking that it might fix it, but it doesn't.
+*context: The player is useless without any combat suit, so they don't even know how to load a gun.
+
+Right before the creature can pounce on you, the large creature from before bursts through the wall (or window) to your right, devouring the smaller creature and giving you the chance to stand up, run to the next room, and close the door frantically.
+
+The next objective is to make it to the next room where some old versions of the suits are kept.
+
+The cutscene transitions to gameplay, and in the next room there is a scripted event.
+
+Two facility scientists are quivering in fear at the other end of the room and one of them says
+"Why is the military here too? What's going on?"
+The other scientist responds: "They must be here to save us!"
+A small group of military soldiers burst through a window on the left and immediately shoots and kills the two scientists.
+*context: The military has been deployed with the order to 'kill anything that moves', because the 	 	facility is now in a compromised state
+
+Immediately after killing the scientists, the ground collapses underneath the military guys and they fall down. Some rubble falls in front of the hole to prevent the player from jumping down after them.
+(Consider having a tentacle monster grab the military guys through the broken window instead)
+
+Note: The player still has the pistol they picked up in the previous room.
+	Equipping it and trying to shoot it just makes it click again, with a chance to trigger an 
+	animation of the player looking cluelessly at the pistol
+
+To complete the objective, the player has to find the keycard for the door on the other end of the room AND complete a hacking minigame, since the entire facility is in lockdown.
+
+After getting through the door into the room that should contain the suits, you find that the floor has collapsed into a secret room underneath.
+
+The next objective is to investigate the damaged suits that you find in the secret room.
+*context: These suits are top-secret and have military-grade software on them that have routines like 	firearm management, improved movement, etc.
+
+One of the suits have an interaction that brings up a hacking minigame with the text "Downloading [Ares Protocol]..."
+Note: [Ares Protocol] is subject to change, but it is the name of the military-grade software
+
+After completing the hacking minigame, the next objective is to get into one of the old suits that are still in-tact.
+
+The player interacts with the suit and once they're wearing it, some text shows up saying "Installing [Ares Protocol]..." 
+*context: This is to indicate that this suit is now equipped with the military grade software needed to 	properly wield weapons.
+
+From this point on in the level, the player is on their own and there is no explicit objective.
+Note: the overarching objective is to escape the facility.
+
+There are NPCs in the area that could give hints to an underground mine that could be a way out, but fundamentally, the player is on their own to find the exit.
+
+Scripts for scientists cowering in fear:
+Scientist A: "I have no idea what is going on..."
+Scientist B: "We gotta get outta here."
+Scientist A: "But access to the doors are all blocked, how do we get out?"
+Scientist B: "Someone told me that there are some old mining tunnels underneath the facility..."
+Scientist B: "If we could get down there, we might be able to find a way out."
+Scientist A: "But how do we get there alive?"
+Scientist B: "I dunno, I dunno..."
+Scientist A: "Maybe if we just hide for long enough, it'll blow over and we can leave..."
+Then the scientists continue cowering in fear.
+
+If the player gets too close to the scientists, their dialogue stops and they both look at the power in fear.
+*context: They have seen the military running around killing scientists, so having someone in a suit approach them makes them 	scared.
+
+Note: consider what happens if the player chooses to shoot one (or both) of the scientists
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
