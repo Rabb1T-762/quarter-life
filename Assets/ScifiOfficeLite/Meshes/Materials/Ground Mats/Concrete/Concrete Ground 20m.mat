@@ -19,6 +19,7 @@ Material:
   - _DISPLACEMENT_LOCK_TILING_SCALE
   - _HEIGHTMAP
   - _MASKMAP
+  - _METALLICGLOSSMAP
   - _NORMALMAP_TANGENT_SPACE
   - _PIXEL_DISPLACEMENT
   - _PIXEL_DISPLACEMENT_LOCK_OBJECT_SCALE
@@ -348,7 +349,7 @@ Material:
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &6562600881536952175
+--- !u!114 &2090504530187554931
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
