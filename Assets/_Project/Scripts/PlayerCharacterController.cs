@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // ReSharper disable Unity.PerformanceCriticalCodeInvocation
@@ -29,6 +30,7 @@ namespace _Project.Scripts
 
         [SerializeField] private Weapon mainWeapon;
 
+        [SerializeField] private LayerMask interactLayersMask;
         private Vector3 _playerVelocity;
         private float _playerCurrentVelocity;
         private float _targetVelocity;
@@ -38,6 +40,11 @@ namespace _Project.Scripts
 
         private Vector3 _lastPosition = Vector3.zero;
         private bool _isMoving;
+
+        private IInteractionObject _lastSelectedInteractable;
+
+        private bool _hasKey = false;
+
 
         // Start is called before the first frame update
         void Start()
@@ -58,9 +65,16 @@ namespace _Project.Scripts
             Vector2 lookDirection = _inputManager.GetLookInput();
             _cameraController.ProcessLook(lookDirection);
 
+            HandleInteraction(lookDirection);
+
             if (_inputManager.GetTriggerInputPressed())
             {
                 mainWeapon.FireWeapon();
+            }
+
+            if (_inputManager.GetInteractInputPressed())
+            {
+                Interact();
             }
         }
 
@@ -68,7 +82,7 @@ namespace _Project.Scripts
         private void ProcessMove(Vector3 moveDirection, bool jumpInput, bool walkInput, bool crouchInput)
         {
             _isMoving = _lastPosition != gameObject.transform.position;
-        
+
             // Grounded check
             _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -159,6 +173,53 @@ namespace _Project.Scripts
 
             // set the ground check object to the bottom of the character controller
             groundCheck.transform.localPosition = playerObjectBottom;
+        }
+
+        private void Interact()
+        {
+            if (_lastSelectedInteractable != null)
+            {
+                _lastSelectedInteractable.Interact(this);
+            }
+        }
+
+        private void HandleInteraction(Vector2 lookDirection)
+        {
+            bool isLookingAtInteractable = false;
+            bool isWithinInteractionArea = false;
+            bool isInteractable = false;
+            float interactDistance = 5f;
+
+
+            //Had to make player camera public for this, not lekker
+            isLookingAtInteractable = Physics.Raycast(_cameraController.playerCamera.transform.position, _cameraController.playerCamera.transform.forward.normalized, out RaycastHit raycastHit, interactDistance, interactLayersMask);
+            if (isLookingAtInteractable)
+            {
+                isInteractable = raycastHit.transform.TryGetComponent<IInteractionObject>(out IInteractionObject interactable);
+                if (isInteractable)
+                {
+                    isWithinInteractionArea = interactable.IsWithinInteractionArea();
+                }
+                if (isWithinInteractionArea)
+                {
+                    interactable.DisplayInteractionUI(this);
+                    _lastSelectedInteractable = interactable;
+                }
+            }
+            else
+            {
+                _lastSelectedInteractable = null;
+            }
+        }
+
+        public bool HasKey()
+        {
+            return _hasKey;
+        }
+
+        public void PickupKey()
+        {
+            _hasKey = true;
         }
     }
 }

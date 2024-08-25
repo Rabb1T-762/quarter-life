@@ -4,7 +4,7 @@ namespace _Project.Scripts
 {
     public class PlayerCameraController : MonoBehaviour
     {
-        [SerializeField] private Camera playerCamera;
+        [SerializeField] public Camera playerCamera;
         [SerializeField] private float xSensitivity = 30f;
         [SerializeField] private float ySensitivity = 30f;
         [SerializeField] private float topClamp = -89f;

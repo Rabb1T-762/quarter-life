@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace _Project.Scripts
 {
@@ -45,6 +47,11 @@ namespace _Project.Scripts
         public bool GetTriggerInputPressed()
         {
             return _onFoot.Shoot.WasPressedThisFrame();
+        }
+
+        public bool GetInteractInputPressed()
+        {
+            return _onFoot.Interact.WasPressedThisFrame();
         }
 
         private void OnEnable()
