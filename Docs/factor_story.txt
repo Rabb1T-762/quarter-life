@@ -38,14 +38,19 @@ Cutscene transitions into a tutorial of the hacking minigame.
 	  This might be changed a bit later, when the player needs to hack into the system to do weirder stuff.
 
 Minigame transitions back into cutscene.
-Superior: ""
+
+This could also be where the superior makes a joke about you needing a tutorial to complete the hacking minigame.
+You could also have the player do another small hacking minigame, but without any help.
+Superior: "Now do it again but without any help!"
+
+Superior: "There you go, was it so hard to just do your job!?"
 
 Superior leaves.
 
 Player looks around and transitions into gameplay.
 
 The area is a small office. 
-The first objective is to pick up your coffee mug on your desk (first introduction to interaction system).
+The first objective is to pick up a coffee mug (first introduction to interaction system).
 You want to go get coffee, but you don't have your keycard on you, so the next objective is to find a keycard in the office (introduction to basic movement, forcing the player to look around their environment for a bit).
 
 With keycard picked up, the player can open the door.
