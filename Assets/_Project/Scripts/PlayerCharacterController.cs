@@ -43,7 +43,10 @@ namespace _Project.Scripts
 
         private IInteractionObject _lastSelectedInteractable;
 
-        private bool _hasKey = false;
+        // This is awful for now
+        private bool _hasRedKey = false;
+        private bool _hasBlueKey = false;
+        private bool _hasGreenKey = false;
 
 
         // Start is called before the first frame update
@@ -212,14 +215,34 @@ namespace _Project.Scripts
             }
         }
 
-        public bool HasKey()
+        public bool HasRedKey()
         {
-            return _hasKey;
+            return _hasRedKey;
         }
 
-        public void PickupKey()
+        public void PickupRedKey()
         {
-            _hasKey = true;
+            _hasRedKey = true;
+        }
+
+        public bool HasBlueKey()
+        {
+            return _hasBlueKey;
+        }
+
+        public void PickupBlueKey()
+        {
+            _hasBlueKey = true;
+        }
+
+        public bool HasGreenKey()
+        {
+            return _hasGreenKey;
+        }
+
+        public void PickupGreenKey()
+        {
+            _hasGreenKey = true;
         }
     }
 }

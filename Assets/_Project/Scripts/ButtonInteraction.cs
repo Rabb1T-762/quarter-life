@@ -8,7 +8,7 @@ public class ButtonInteraction : MonoBehaviour, IInteractionObject
     [SerializeField] Material doorButtonOpened;
     public void Interact(PlayerCharacterController playerController)
     {
-        bool hasKey = playerController.HasKey();
+        bool hasKey = playerController.HasRedKey();
 
         if(hasKey)
         {
@@ -44,7 +44,7 @@ public class ButtonInteraction : MonoBehaviour, IInteractionObject
 
     public void DisplayInteractionUI(PlayerCharacterController playerCharacterController)
     {
-        bool hasKey = playerCharacterController.HasKey();
+        bool hasKey = playerCharacterController.HasRedKey();
 
         if(hasKey)
         {

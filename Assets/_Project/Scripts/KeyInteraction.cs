@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using _Project.Scripts;
 using UnityEngine;
+using System;
 
 public class KeyInteraction : MonoBehaviour, IInteractionObject
 {
-    public void Interact(PlayerCharacterController playerCharacterController)
+    public virtual void Interact(PlayerCharacterController playerCharacterController)
     {
-        playerCharacterController.PickupKey();
+        throw new NotImplementedException("Key doesn't implement Interact");
     }
 
     public void DisplayInteractionUI(PlayerCharacterController playerCharacterController)
