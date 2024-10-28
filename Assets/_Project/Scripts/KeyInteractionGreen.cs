@@ -1,7 +1,6 @@
 using _Project.Scripts;
-using UnityEngine;
 
-public class KeyInteractionGreen : KeyInteraction
+public sealed class KeyInteractionGreen : KeyInteraction
 {
     public override void Interact(PlayerCharacterController playerCharacterController)
     {

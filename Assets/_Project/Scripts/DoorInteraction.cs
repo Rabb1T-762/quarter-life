@@ -34,7 +34,7 @@ public class DoorInteraction : MonoBehaviour, IInteractionObject
 
     public bool IsWithinInteractionArea()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 5f);
+        Collider[] colliders = Physics.OverlapSphere(this.transform.position, 5f);
 
         foreach(Collider collider in colliders)
         {
