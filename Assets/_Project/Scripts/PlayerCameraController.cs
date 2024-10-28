@@ -33,4 +33,6 @@ namespace _Project.Scripts
         playerCamera.transform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
         transform.localRotation = Quaternion.Euler(0f, _yRotation, 0f);
     }
+    
+    }
 }
