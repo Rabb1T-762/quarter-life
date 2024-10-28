@@ -2,7 +2,9 @@ using _Project.Tests.TestUtilities;
 using NUnit.Framework;
 using UnityEngine;
 
-public class PlayerCameraControllerTests
+namespace _Project.Scripts
+{
+    public class PlayerCameraControllerTests
 {
     private GameObject _simulatedPlayerObject;
     private PlayerCameraController _playerCameraController;
@@ -133,4 +135,5 @@ public class PlayerCameraControllerTests
         // Assert
         Assert.That(actualYRotation, Is.LessThan(initialYRotation));
     }
+}
 }

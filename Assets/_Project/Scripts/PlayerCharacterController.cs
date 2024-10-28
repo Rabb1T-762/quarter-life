@@ -69,10 +69,10 @@ namespace _Project.Scripts
 
             HandleInteraction(lookDirection);
 
-            if (_inputManager.GetTriggerInputPressed())
-            {
-                mainWeapon.FireWeapon();
-            }
+            // if (_inputManager.GetTriggerInputPressed())
+            // {
+            //     mainWeapon.FireWeapon();
+            // }
 
             if (_inputManager.GetInteractInputPressed())
             {

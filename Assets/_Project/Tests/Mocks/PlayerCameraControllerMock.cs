@@ -1,7 +1,9 @@
 using System;
 using UnityEngine;
 
-public class PlayerCameraControllerMock : PlayerCameraController
+namespace _Project.Scripts
+{
+    public class PlayerCameraControllerMock : PlayerCameraController
 {
     public new Camera playerCamera;
 
@@ -14,4 +16,5 @@ public class PlayerCameraControllerMock : PlayerCameraController
     public override void ProcessLook(Vector2 input)
     {
     }
+}
 }
