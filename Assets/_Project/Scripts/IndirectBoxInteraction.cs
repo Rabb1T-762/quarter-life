@@ -55,6 +55,11 @@ public class IndirectBoxInteraction : MonoBehaviour, IInteractionObject
         Debug.Log("E");
     }
 
+    public virtual void DisableInteractionUI(PlayerCharacterController playerCharacterController)
+    {
+        
+    }
+
     public bool IsWithinInteractionArea()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, 3f);

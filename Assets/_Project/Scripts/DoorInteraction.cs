@@ -29,7 +29,12 @@ public class DoorInteraction : MonoBehaviour, IInteractionObject
 
     public virtual void DisplayInteractionUI(PlayerCharacterController playerCharacterController)
     {
-        Debug.Log("E to open door");
+        Debug.Log("E to open door.");
+    }
+
+    public virtual void DisableInteractionUI(PlayerCharacterController playerCharacterController)
+    {
+        
     }
 
     public bool IsWithinInteractionArea()

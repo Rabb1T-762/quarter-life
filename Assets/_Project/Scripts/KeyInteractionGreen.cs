@@ -5,6 +5,6 @@ public sealed class KeyInteractionGreen : KeyInteraction
     public override void Interact(PlayerCharacterController playerCharacterController)
     {
         playerCharacterController.PickupGreenKey();
-        Destroy(gameObject);
+        base.Interact(playerCharacterController);
     }
 }

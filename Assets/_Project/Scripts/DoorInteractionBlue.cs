@@ -19,7 +19,7 @@ public sealed class DoorInteractionBlue : DoorInteraction
         } 
         else
         {
-            Debug.Log("You require a Blue keycard");
+            Debug.Log("You require a Blue keycard.");
         }
     }
 }

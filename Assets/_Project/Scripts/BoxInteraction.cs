@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using _Project.Scripts;
 using UnityEngine;
 
-public class BoxInteraction : MonoBehaviour, IInteractionObject
+public sealed class BoxInteraction : MonoBehaviour, IInteractionObject
 {
     private bool isOn = true;
     [SerializeField] private Material Green;
@@ -34,7 +34,15 @@ public class BoxInteraction : MonoBehaviour, IInteractionObject
 
     public void DisplayInteractionUI(PlayerCharacterController playerCharacterController)
     {
-        Debug.Log("E");
+
+        Outline outline = gameObject.GetComponent<Outline>();
+        outline.OutlineWidth = 5f;
+    }
+
+    public void DisableInteractionUI(PlayerCharacterController playerCharacterController)
+    {
+        Outline outline = gameObject.GetComponent<Outline>();
+        outline.OutlineWidth = 0f;
     }
 
     public bool IsWithinInteractionArea()

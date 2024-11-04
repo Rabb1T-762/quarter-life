@@ -1,0 +1,19 @@
+Interaction Ideas:
+
+-Opening toolbox (x-rotation on lid) [toggle]
+
+-Opening drawer (translate) [toggle]
+
+-Opening glass case (destroy?)
+
+Types of Interactions:
+
+-Moves/Rotates
+	-Toggleable
+
+	-Once-off
+
+-Pickup
+	-To inventory
+
+	-To hand

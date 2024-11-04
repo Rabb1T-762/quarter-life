@@ -54,6 +54,11 @@ public class ButtonInteraction : MonoBehaviour, IInteractionObject
         }
     }
 
+    public virtual void DisableInteractionUI(PlayerCharacterController playerCharacterController)
+    {
+        
+    }
+
     public bool IsWithinInteractionArea()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, 5f);
