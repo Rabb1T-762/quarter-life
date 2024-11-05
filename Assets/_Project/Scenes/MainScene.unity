@@ -1417,8 +1417,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movingPartName: Lid
   rotateDir: {x: -90, y: 0, z: 0}
-  relativeOpenPosition: {x: 0, y: 0, z: 0}
-  relativeClosedPosition: {x: 0, y: 0, z: 0}
+  relativeDisplacedPosition: {x: 0, y: 0, z: 0}
+  relativeOriginalPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &105102573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3054,7 +3054,6 @@ GameObject:
   - component: {fileID: 313355092}
   - component: {fileID: 313355091}
   - component: {fileID: 313355090}
-  - component: {fileID: 313355089}
   m_Layer: 0
   m_Name: FakeDoor
   m_TagString: Untagged
@@ -3077,20 +3076,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 490762059}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &313355089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 313355087}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c1083f6b1b71b24194f015c02e008aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Green: {fileID: 0}
-  Red: {fileID: 0}
 --- !u!65 &313355090
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17057,8 +17042,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movingPartName: Lid
   rotateDir: {x: -90, y: 0, z: 0}
-  relativeOpenPosition: {x: 0, y: 0.8, z: -0.2}
-  relativeClosedPosition: {x: 0, y: 0.5, z: 0}
+  relativeDisplacedPosition: {x: 0, y: 0, z: 0}
+  relativeOriginalPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &1709153799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18309,8 +18294,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movingPartName: Lid
   rotateDir: {x: -90, y: 0, z: 0}
-  relativeOpenPosition: {x: 0, y: 0.8, z: -0.2}
-  relativeClosedPosition: {x: 0, y: 0.5, z: 0}
+  relativeDisplacedPosition: {x: 0, y: 0, z: 0}
+  relativeOriginalPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &1917147226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19276,8 +19261,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movingPartName: Lid
   rotateDir: {x: -90, y: 0, z: 0}
-  relativeOpenPosition: {x: 0, y: 0, z: 0}
-  relativeClosedPosition: {x: 0, y: 0, z: 0}
+  relativeDisplacedPosition: {x: 0, y: 0, z: 0}
+  relativeOriginalPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &2012206256
 MonoBehaviour:
   m_ObjectHideFlags: 0

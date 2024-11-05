@@ -202,7 +202,7 @@ namespace _Project.Scripts
 
             //Had to make player camera public for this, not lekker
             // isLookingAtInteractable = Physics.Raycast(_cameraController.playerCamera.transform.position, _cameraController.playerCamera.transform.forward.normalized, out RaycastHit raycastHit, interactDistance, interactLayersMask);
-            isLookingAtInteractable = Physics.Raycast(_cameraController.playerCamera.transform.position, _cameraController.playerCamera.transform.forward.normalized, out RaycastHit raycastHit, interactDistance);
+            isLookingAtInteractable = Physics.Raycast(_cameraController.playerCamera.transform.position, _cameraController.playerCamera.transform.forward.normalized, out RaycastHit raycastHit, interactDistance);      
             if (isLookingAtInteractable)
             {
                 isInteractable = raycastHit.transform.TryGetComponent<IInteractionObject>(out IInteractionObject interactable);
