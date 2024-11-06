@@ -202,13 +202,19 @@ namespace _Project.Scripts
 
             //Had to make player camera public for this, not lekker
             // isLookingAtInteractable = Physics.Raycast(_cameraController.playerCamera.transform.position, _cameraController.playerCamera.transform.forward.normalized, out RaycastHit raycastHit, interactDistance, interactLayersMask);
-            isLookingAtInteractable = Physics.Raycast(_cameraController.playerCamera.transform.position, _cameraController.playerCamera.transform.forward.normalized, out RaycastHit raycastHit, interactDistance);      
+            isLookingAtInteractable = Physics.Raycast(_cameraController.playerCamera.transform.position, _cameraController.playerCamera.transform.forward.normalized, out RaycastHit raycastHit, interactDistance);
             if (isLookingAtInteractable)
             {
+                Debug.Log(raycastHit.transform);
                 isInteractable = raycastHit.transform.TryGetComponent<IInteractionObject>(out IInteractionObject interactable);
                 if (isInteractable)
                 {
                     isWithinInteractionArea = interactable.IsWithinInteractionArea();
+                }
+                else
+                {
+                    _lastSelectedInteractable?.DisableInteractionUI(this);
+                    _lastSelectedInteractable = null;
                 }
                 if (isWithinInteractionArea)
                 {
@@ -221,6 +227,7 @@ namespace _Project.Scripts
                 _lastSelectedInteractable?.DisableInteractionUI(this);
                 _lastSelectedInteractable = null;
             }
+
         }
 
         public bool HasRedKey()
